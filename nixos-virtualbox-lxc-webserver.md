@@ -13,6 +13,19 @@ root@nixos:~]# systemctl
 nscd.service                           loaded failed     failed    Name Service Cache Daemon
 ...
 ```
+```
+[root@nixos:~]# journalctl -u nscd.service
+...
+Oct 18 01:30:29 nixos systemd[1]: Starting Name Service Cache Daemon...
+Oct 18 01:30:29 nixos systemd[351]: nscd.service: Failed to set up mount namespacing: /run/systemd/unit-root/run/nscd: Permission denied
+Oct 18 01:30:29 nixos systemd[351]: nscd.service: Failed at step NAMESPACE spawning /nix/store/h8jaqdprgf9rv8ldhd2j0nv5i5b32k01-glibc-2.27-bin/sbin/nscd: Permission denied
+Oct 18 01:30:29 nixos systemd[1]: nscd.service: Control process exited, code=exited, status=226/NAMESPACE
+Oct 18 01:30:29 nixos systemd[1]: nscd.service: Failed with result 'exit-code'.
+Oct 18 01:30:29 nixos systemd[1]: Failed to start Name Service Cache Daemon.
+Oct 18 01:30:29 nixos systemd[1]: nscd.service: Service RestartSec=100ms expired, scheduling restart.
+Oct 18 01:30:29 nixos systemd[1]: nscd.service: Scheduled restart job, restart counter is at 3.
+Oct 18 01:30:29 nixos systemd[1]: Stopped Name Service Cache Daemon.
+```
 
 #### systemd-udev-trigger.service fails to start
 ```
