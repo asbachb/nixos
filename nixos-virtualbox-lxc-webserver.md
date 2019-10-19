@@ -28,6 +28,9 @@ Oct 18 01:30:29 nixos systemd[1]: Stopped Name Service Cache Daemon.
 ```
 ##### Solution
 It's a little bit unclear how to solve the issue within a unprivileged container. So disable the service for now.
+```
+services.nscd.enable = false;
+```
 
 #### systemd-udev-trigger.service fails to start
 ```
