@@ -5,7 +5,7 @@ Goal: Have a *virtualbox instance* with a running *lxd* service which running a 
 lxc image import $(nixos-generate -f lxc-metadata) $(nixos-generate -f lxc) --alias nixos
 ```
 
-### Issues with a running NixOS container
+### Issues with running NixOS containers
 #### nscd.service fails to start
 ```
 root@nixos:~]# systemctl
@@ -59,4 +59,13 @@ Oct 18 01:46:45 nixos systemd[1]: getty@tty1.service: Failed with result 'exit-c
 Oct 18 01:46:45 nixos systemd[1]: getty@tty1.service: Service has no hold-off time (RestartSec=0), scheduling restart.
 Oct 18 01:46:45 nixos systemd[1]: getty@tty1.service: Scheduled restart job, restart counter is at 97.
 Oct 18 01:46:45 nixos systemd[1]: Stopped Getty on tty1
+```
+
+#### nix-channel could not be updated since proc access error
+```
+[root@nixos:~]# nix-channel --update 
+unpacking channels...
+warning: Nix search path entry '/nix/var/nix/profiles/per-user/root/channels' does not exist, ignoring
+error: while setting up the build environment: mounting /proc: Operation not permitted
+error: program '/nix/store/bnrk3fsrwxfalix265sx4y3r2909dc6m-nix-2.3/bin/nix-env' failed with exit code 1
 ```
