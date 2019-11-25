@@ -1,6 +1,47 @@
 Goal: Have a *virtualbox instance* with a running *lxd* service which running a *nix os container* which is running a *nginx* server.
 
-### Phase 1: Creating a NixOS base image
+### VirtualBox configuration
+
+```
+[demo@nixos:~/dev/nix/nixpkgs]$ cat /etc/nixos/configuration.nix 
+{ config, pkgs, ... }:
+
+{
+  imports = [ <nixpkgs/nixos/modules/installer/virtualbox-demo.nix> ];
+
+  boot.kernelModules = [ "kvm-amd" "kvm-intel" ];
+
+  virtualisation.docker.enable = true;
+
+  environment.systemPackages = with pkgs; [
+    wget git vim atom
+  ];
+
+  environment.etc."gitconfig".text = ''
+    [user]
+      name = Benjamin Asbach
+      email = asbachb@users.noreply.github.com
+  '';
+
+  services.xserver.layout = "de";
+
+  virtualisation.lxc = {
+    enable = true;
+    lxcfs.enable = true;
+    defaultConfig = "lxc.include = ${pkgs.lxcfs}/share/lxc/config/common.conf.d/00-lxcfs.conf";
+  };
+
+  virtualisation.lxd.enable = true;
+
+  users.users.demo = {
+    extraGroups = [ "wheel" "lxd" "docker" ];
+  };
+}
+
+```
+
+
+### Creating a NixOS base image
 ```
 lxc image import $(nixos-generate -f lxc-metadata) $(nixos-generate -f lxc) --alias nixos
 ```
