@@ -1,6 +1,6 @@
 Goal: Have a *virtualbox instance* with a running *lxd* service which running a *nix os container* which is running a *nginx* server.
 
-### Creating a NixOS base image
+### Phase 1: Creating a NixOS base image
 ```
 lxc image import $(nixos-generate -f lxc-metadata) $(nixos-generate -f lxc) --alias nixos
 ```
