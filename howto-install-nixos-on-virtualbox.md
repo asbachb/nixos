@@ -14,3 +14,9 @@ Create a new virtual machine in VirtualBox with
 
 In order to use automatic screen resizing you need to adjust these settings:
 * Display / Screen / Graphics Controller: VBoxVGA
+
+Override video drivers in `/etc/nixos/configuration.nix` (xserver won't start with VBoxVGA and without this option)
+
+```
+services.xserver.videoDrivers = mkOverride 40 [ "virtualbox" "vmware" "cirrus" "vesa" "modesetting"];
+```
