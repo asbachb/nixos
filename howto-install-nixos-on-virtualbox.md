@@ -20,3 +20,21 @@ Override video drivers in `/etc/nixos/configuration.nix` (xserver won't start wi
 ```
 services.xserver.videoDrivers = mkOverride 40 [ "virtualbox" "vmware" "cirrus" "vesa" "modesetting"];
 ```
+
+## Installation
+Mount latest iso for minimal installation and boot virtual machine.
+
+Change keyboard if applicable:
+```
+sudo loadkeys de
+```
+
+Create one partition of you assign enough ram to you vm. Create two partitions if you need a swap partition.
+```
+sudo su
+
+parted /dev/sda mktable gpt
+parted /dev/sda mkpart primary linux-swap 1MiB 1GiB
+parted /dev/sda mkpart primary ext4 1GiB 100%
+parted /dev/sda set 2 boot on
+```
