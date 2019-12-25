@@ -46,4 +46,20 @@ swapon /dev/sda1
 parted /dev/sda -- mkpart primary ext4 2GiB 100%
 parted /dev/sda set 2 boot on
 mkfx.ext4 -L nixos /dev/sda2
+mount /dev/sda2 /mnt
+```
+
+Generate initial nixos configuration.
+```
+nixos-generate-configuration --root /mnt
+```
+
+Adjust configuration to your needs.
+```
+nano /mnt/etc/nixos/configuration.nix
+```
+
+Install nixos.
+```
+nixos-install
 ```
