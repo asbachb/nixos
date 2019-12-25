@@ -24,17 +24,26 @@ services.xserver.videoDrivers = mkOverride 40 [ "virtualbox" "vmware" "cirrus" "
 ## Installation
 Mount latest iso for minimal installation and boot virtual machine.
 
-Change keyboard if applicable:
+Change keyboard if applicable.
 ```
 sudo loadkeys de
 ```
 
-Create one partition of you assign enough ram to you vm. Create two partitions if you need a swap partition.
+Partioning depends 1) if you want to use mbr or gpt is partition table and b) if you need a swap partition. Most simple would be MBR + No Swap Partition.
+In this example a 2GB swap parition will be configured.
 ```
 sudo su
 
-parted /dev/sda mktable gpt
-parted /dev/sda mkpart primary linux-swap 1MiB 1GiB
-parted /dev/sda mkpart primary ext4 1GiB 100%
-parted /dev/sda set 2 boot on
+# partition table
+parted /dev/sda mktable msdos
+
+# swap partition
+parted /dev/sda -- mkpart primary ext4 1MiB -2GiB
+parted /dev/sda set 1 boot on
+mkfx.ext4 -L nixos /dev/sda1
+
+# root partition
+parted /dev/sda -- mkpart primary linux-swap -2GiB 100%
+mkswap -L swap /dev/sda2
+swapon /dev/sda2
 ```
