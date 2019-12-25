@@ -38,12 +38,12 @@ sudo su
 parted /dev/sda mktable msdos
 
 # swap partition
-parted /dev/sda -- mkpart primary ext4 1MiB -2GiB
-parted /dev/sda set 1 boot on
-mkfx.ext4 -L nixos /dev/sda1
+parted /dev/sda -- mkpart primary linux-swap 0% 2GiB
+mkswap -L swap /dev/sda1
+swapon /dev/sda1
 
 # root partition
-parted /dev/sda -- mkpart primary linux-swap -2GiB 100%
-mkswap -L swap /dev/sda2
-swapon /dev/sda2
+parted /dev/sda -- mkpart primary ext4 2GiB 100%
+parted /dev/sda set 2 boot on
+mkfx.ext4 -L nixos /dev/sda2
 ```
