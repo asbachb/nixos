@@ -20,6 +20,7 @@ Override video drivers in `/etc/nixos/configuration.nix` (xserver won't start wi
 ```
 services.xserver.videoDrivers = mkOverride 40 [ "virtualbox" "vmware" "cirrus" "vesa" "modesetting"];
 ```
+Note: In order to use `mkOverride` ensure your `configuration.nix`
 
 ## Installation
 Mount latest iso for minimal installation and boot virtual machine.
